@@ -6,8 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="/fonts/Lato/css/fonts.css" rel="stylesheet" type="text/css">
         <!-- @todo minify CSS -->
-        <link rel="stylesheet" href="/css/style.css">
-        <link rel="stylesheet" href="/css/rtl-style.css" ng-disabled="! rtlEnabled" disabled="disabled">
+        <link rel="stylesheet" href="/css/style.css" ng-href="{{rtlEnabled ? '/css/rtl-style.css' : '/css/style.css'}}">
         <link rel="stylesheet" href="/css/vendor.css">
 
         <title ng-bind-template="{{pageTitle}} {{siteTitle}}"></title>
@@ -52,10 +51,10 @@
         <div id="bootstrap-app" class="hidden">
             <header class="header header-full overlay" role="banner" ng-controller="navigation">
                 <div class="container">
-                    <!-- @todo dynamic header image -->
-                    <!--<div class="hero-image">
-                         <img src="http://github.ushahidi.org/platform-pattern-library/assets/img/header-bk.jpg" alt="" />
-                    </div>-->
+                    <div class="hero-image">
+                         <img ng-show"site.image_header" ng-src="{{site.image_header}}" alt="" />
+                         <img ng-show="!site.image_header" src="img/default-header-bg.png" alt="" />
+                    </div>
 
                     <div class="color-overlay">
                         <div class="parallax">
@@ -92,8 +91,8 @@
                             <p ng-bind="site.description"></p>
                             <ul class="footer-nav">
                                 <li><a ng-href="/" translate>nav.home</a></li>
-                                <li><a ng-href="/about" translate>nav.about</a></li>
-                                <li><a ng-href="/activity" translate>nav.activity</a></li>
+                                <!-- <li><a ng-href="/about" translate>nav.about</a></li> -->
+                                <!-- <li><a ng-href="/activity" translate>nav.activity</a></li> -->
                                 <li><a ng-href="/tools/settings" ng-show="isAdmin()" translate>nav.settings</a></li>
                                 <li><a href="http://bit.ly/v3CommunityTestingFeedback" translate>nav.feedback</a></li>
                             </ul>
