@@ -8,6 +8,7 @@
         <!-- @todo minify CSS -->
         <link rel="stylesheet" href="/css/style.css" ng-href="{{rtlEnabled ? '/css/rtl-style.css' : '/css/style.css'}}">
         <link rel="stylesheet" href="/css/vendor.css">
+        <script src="/config.js"></script>
 
         <title ng-bind-template="{{pageTitle}} {{siteTitle}}"></title>
         <meta name="description" content="{{pageDescription}}">
@@ -20,6 +21,9 @@
         <div id="bootstrap-loading">
             <header class="header header-full overlay" role="banner">
                 <div class="container">
+                    <div class="hero-image">
+                         <img src="img/default-header-bg.png" alt="" />
+                    </div>
                     <div class="color-overlay">
                         <div class="parallax">
                             <h1 class="beta"><i class="fa fa-refresh fa-4 fa-spin"></i></h1>
@@ -32,6 +36,9 @@
         <div id="bootstrap-error" class="hidden">
             <header class="header header-full overlay" role="banner">
                 <div class="container">
+                    <div class="hero-image">
+                         <img src="img/default-header-bg.png" alt="" />
+                    </div>
                     <div class="color-overlay">
                         <div class="parallax">
                             <h1 class="beta"><img style="max-width: 50px; margin: auto;" src="img/ushahidi-logo.svg" alt="Ushahidi Logo"></h1>
@@ -49,7 +56,7 @@
         </div>
 
         <div id="bootstrap-app" class="hidden">
-            <header class="header header-full overlay" role="banner" ng-controller="navigation">
+            <header class="header header-full overlay" ng-class="{ 'header-full' : isHome, 'header-compact': !isHome }" role="banner" ng-controller="navigation">
                 <div class="container">
                     <div class="hero-image">
                          <img ng-show"site.image_header" ng-src="{{site.image_header}}" alt="" />
@@ -93,6 +100,8 @@
                                 <li><a ng-href="/" translate>nav.home</a></li>
                                 <!-- <li><a ng-href="/about" translate>nav.about</a></li> -->
                                 <!-- <li><a ng-href="/activity" translate>nav.activity</a></li> -->
+                                <li><a href="http://docs.ushahidi.com" translate>app.documentation</a></li>
+                                <li><a href="https://github.com/ushahidi/platform/issues/new" translate>app.report_a_bug</a></li>
                                 <li><a ng-href="/tools/settings" ng-show="isAdmin()" translate>nav.settings</a></li>
                                 <li><a href="http://bit.ly/v3CommunityTestingFeedback" translate>nav.feedback</a></li>
                             </ul>

@@ -40,12 +40,14 @@ function (
         geojson: {
             method: 'GET',
             url: Util.apiUrl('/posts/:id/geojson'),
-            isArray: false
+            isArray: false,
+            paramSerializer: '$httpParamSerializerJQLike'
         },
         stats: {
             method: 'GET',
             url: Util.apiUrl('/posts/:id/stats'),
-            isArray: false
+            isArray: false,
+            paramSerializer: '$httpParamSerializerJQLike'
         }
     });
 

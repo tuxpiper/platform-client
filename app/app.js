@@ -6,8 +6,10 @@ require('leaflet.locatecontrol/src/L.Control.Locate');
 require('angular-leaflet-directive');
 require('angular-resource');
 require('angular-translate');
+require('angular-translate-loader-static-files');
 require('angular-ui-bootstrap/ui-bootstrap-tpls');
-require('angular-ui-bootstrap-datetimepicker');
+require('angular-datepicker');
+require('moment-timezone');
 require('angular-sanitize');
 require('angular-filter');
 require('angular-local-storage');
@@ -28,9 +30,12 @@ require('./setting/setting-module.js');
 require('./set/set-module.js');
 require('./user-profile/user-profile-module.js');
 
+// Make sure we have a window.ushahidi object
+window.ushahidi = window.ushahidi || {};
+
 // this 'environment variable' will be set within the gulpfile
-var backendUrl = process.env.BACKEND_URL || 'http://ushahidi-backend',
-    apiUrl = window.apiUrl = backendUrl + '/api/v3',
+var backendUrl = window.ushahidi.backendUrl = window.ushahidi.backendUrl || process.env.BACKEND_URL || 'http://ushahidi-backend',
+    apiUrl = window.ushahidi.apiUrl = backendUrl + '/api/v3',
     claimedAnonymousScopes = [
         'posts',
         'media',
@@ -54,8 +59,7 @@ angular.module('app',
         'LocalStorageModule',
         'pascalprecht.translate',
         'ui.bootstrap.pagination',
-        'ui.bootstrap.datepicker',
-        'ui.bootstrap.datetimepicker',
+        'datePicker',
         'ui.gravatar',
         'leaflet-directive',
         'angular.filter',
@@ -93,7 +97,7 @@ angular.module('app',
         return window.L;
     })
     .factory('BootstrapConfig', function () {
-        return window.bootstrapConfig || {};
+        return window.ushahidi.bootstrapConfig || {};
     })
     .run(function () {
         // Once bootstrapped, show the app

@@ -2,7 +2,8 @@ angular.module('ushahidi.common', [
 	'ushahidi.common.dropdown',
 	'ushahidi.common.accordion',
 	'ushahidi.common.offcanvas',
-	'ushahidi.common.modal'
+	'ushahidi.common.modal',
+	'ushahidi.common.sticky-sidebar'
 ])
 
 .service('Authentication', require('./services/authentication.js'))
@@ -38,6 +39,8 @@ angular.module('ushahidi.common', [
 .config(require('./common-routes.js'))
 
 .run(require('./global/event-handlers.js'))
+// Use language settings from config
+.run(require('./global/language-settings.js'))
 ;
 
 // Load submodules
@@ -45,3 +48,4 @@ require('./directives/dropdown.js');
 require('./directives/accordion.js');
 require('./directives/offcanvas.js');
 require('./directives/modal.js');
+require('./directives/sticky-sidebar.js');

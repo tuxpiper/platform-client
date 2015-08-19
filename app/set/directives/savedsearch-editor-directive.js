@@ -34,8 +34,20 @@ function (
                 };
             }
 
+            $scope.isAdmin = $rootScope.isAdmin;
+
             $scope.roles = RoleHelper.roles();
             $scope.views = PostViewHelper.views();
+
+            $scope.cpySavedSearch = _.clone($scope.savedSearch);
+
+            $scope.$watch( function () {
+                return $scope.isOpen.data;
+            }, function (newValue, oldValue) {
+                if (!newValue) {
+                    $scope.cpySavedSearch = _.clone($scope.savedSearch);
+                }
+            });
 
             $scope.saveSavedsearch = function (savedSearch) {
                 var persist = savedSearch.id ? SavedSearchEndpoint.update : SavedSearchEndpoint.save;
@@ -47,6 +59,7 @@ function (
                 .$promise
                 .then(function (savedSearch) {
                     $location.url('/savedsearches/' + savedSearch.id);
+                    $scope.savedSearch = _.clone(savedSearch);
                     $scope.isOpen.data = false;
                     $rootScope.$broadcast('event:savedSearch:update');
                 }, function (errorResponse) {
