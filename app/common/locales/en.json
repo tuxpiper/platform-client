@@ -176,8 +176,7 @@
         "user" : "User",
         "users" : "Users",
         "views" : "Views",
-        "workspace" : "Workspace",
-        "feedback" : "Feedback"
+        "workspace" : "Workspace"
     },
     "view_tabs" : {
         "view" : "View",
