@@ -1,27 +1,19 @@
 var gulp         = require('gulp'),
-    sass         = require('gulp-sass'),
     livereload   = require('gulp-livereload'),
-    autoprefixer = require('gulp-autoprefixer'),
     plumber      = require('gulp-plumber'),
     rename       = require('gulp-rename'),
     gutil        = require('gulp-util'),
     notify       = require('gulp-notify'),
     source       = require('vinyl-source-stream'),
     browserify   = require('browserify'),
-    watchify    = require('watchify'),
+    watchify     = require('watchify'),
     envify       = require('envify/custom'),
     fs           = require('fs'),
     merge        = require('merge'),
-    karma        = require('karma').server,
     buffer       = require('vinyl-buffer'),
     uglify       = require('gulp-uglify'),
     sourcemaps   = require('gulp-sourcemaps'),
-    bump         = require('gulp-bump'),
-    tar          = require('gulp-tar'),
-    gzip         = require('gulp-gzip'),
-    jscs         = require('gulp-jscs'),
-    dotenv       = require('dotenv'),
-    Transifex    = require('transifex');
+    dotenv       = require('dotenv');
 
 // Grab env vars from .env file
 dotenv.load({silent: true});
@@ -107,6 +99,9 @@ function errorHandler(err) {
  * Converts SASS files to CSS
  */
 gulp.task('sass', ['rename'], function () {
+    var sass = require('gulp-sass'),
+        autoprefixer = require('gulp-autoprefixer');
+
     return gulp.src(['sass/*.scss'])
         .pipe(plumber({
             errorHandler: errorHandler
@@ -308,6 +303,8 @@ gulp.task('node-server', [], require('./server/server'));
  * Run test once and exit
  */
 gulp.task('test', function (done) {
+    var karma = require('karma').server;
+
     var browsers = options.useChromeForKarma ? ['Chrome'] : ['PhantomJS'];
     karma.start({
         configFile: __dirname + '/test/karma.conf.js',
@@ -330,6 +327,8 @@ gulp.task('send-stats-to-coveralls', function () {
  * Watch for file changes and re-run tests on each change
  */
 gulp.task('tdd', function (done) {
+    var karma = require('karma').server;
+
     var browsers = options.useChromeForKarma ? ['Chrome'] : ['PhantomJS'];
     karma.start({
         configFile: __dirname + '/test/karma.conf.js',
@@ -343,6 +342,8 @@ gulp.task('tdd', function (done) {
  * Run JSCS tests
  */
 gulp.task('jscs', function () {
+    var jscs = require('gulp-jscs');
+
     return gulp.src(['app/**/*.js', 'test/**/*.js'])
         .pipe(jscs());
 });
@@ -354,6 +355,8 @@ gulp.task('jscs', function () {
  * `--type` - Semver version type to bump
  */
 gulp.task('bump', function () {
+    var bump = require('gulp-bump');
+
     var options = {
         type: gutil.env.type,
         version: gutil.env['bump-version']
@@ -370,6 +373,10 @@ gulp.task('bump', function () {
  * `--version-suffix=<version>` - Specify version for output fil
  */
 gulp.task('tar', ['build'], function () {
+    var tar = require('gulp-tar'),
+        gzip = require('gulp-gzip');
+
+
     var version = gutil.env['version-suffix'] || require('./package.json').version;
 
     return gulp.src('server/www/**')
@@ -404,6 +411,8 @@ gulp.task('heroku:dev', ['build'], function () {});
  * Download translations from www.transifex.com
  */
 gulp.task('transifex-download', function () {
+    var Transifex = require('transifex');
+
     var project_slug = 'ushahidi-v3',
         locales_dir = options.www + '/locales/',
         mode = 'default',
